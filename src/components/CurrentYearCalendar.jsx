@@ -5,18 +5,13 @@ import { addDoc, collection, getDocs, query } from 'firebase/firestore';
 
 const CurrentYearCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [greeting, setGreeting] = useState('');
-
   const [postList, setPostList] = useState([]);
-
   const [content, setContent ] = useState([]);
   const [singleImage, setSingleImage] = useState('');
 
   const handleImage = (e) => {
    e.preventDefault();
-
    let pickedFile;
-
    if(e.target.files && e.target.files.length > 0 ) {
     pickedFile = e.target.files[0];
     setSingleImage(pickedFile);
@@ -29,9 +24,7 @@ const CurrentYearCalendar = () => {
 
   const createPost = async (e) => {
     e.preventDefault();
-
     const imageRef = ref(storage, `images/${singleImage.name}`);
-
     uploadBytes(imageRef, singleImage).then((res) => {
       alert(`投稿に成功しました`);
       getDownloadURL(imageRef).then((imageUrl) => {
@@ -42,8 +35,6 @@ const CurrentYearCalendar = () => {
         });
       })
     })
-
-
    setContent("");
   }; 
 
@@ -75,15 +66,6 @@ const CurrentYearCalendar = () => {
     const day = currentDate.getDate();
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
-
-    // 例: 2023年11月30日は「おはよう」、2023年12月1日は「こんにちは」
-    // if (year === 2023 && month === 11 && day === 30) {
-    //   setGreeting('おはよう');
-    // } else if (year === 2023 && month === 12 && day === 1) {
-    //   setGreeting('こんにちは');
-    // } else {
-    //   setGreeting('');
-    // }
   };
 
   useEffect(() => {
@@ -98,11 +80,9 @@ const CurrentYearCalendar = () => {
 
    const filteredPosts = postList.filter((post) => post.createdAt === formattedDate);
 
-
   return (
     <>
     <div className="container mx-auto mt-8 text-center">
-      <h1 className="text-4xl font-bold mb-4">今年だよ</h1>
       <div className="flex justify-center items-center mb-4">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded"
@@ -125,9 +105,6 @@ const CurrentYearCalendar = () => {
       <input type="file"  accept="png, .jpeg, .jpg, .HEIC" onChange={handleImage} />
     <button type="submit">保存</button>
      </form>
-
-
-      {/* <p className="text-xl">{greeting}</p> */}
     </div>
 
       {filteredPosts.map((post) => (
@@ -138,9 +115,6 @@ const CurrentYearCalendar = () => {
         />
         </div>
       ))} 
-
-   
-
     </>
   )
 }

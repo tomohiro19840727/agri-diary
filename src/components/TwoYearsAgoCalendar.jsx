@@ -63,7 +63,6 @@ const TwoYearsAgoCalendar = () => {
     updateGreeting();
   }, [currentDate]);
 
-  
 
   const updateGreeting = () => {
     // ここで日付と年に対応するメッセージを設定
@@ -84,11 +83,9 @@ const TwoYearsAgoCalendar = () => {
 
    const filteredPosts = postList.filter((post) => post.createdAt === formattedDate);
 
-
   return (
     <>
     <div className="container mx-auto mt-8 text-center">
-      <h1 className="text-4xl font-bold mb-4">一昨年だよ</h1>
       <div className="flex justify-center items-center mb-4">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded"
