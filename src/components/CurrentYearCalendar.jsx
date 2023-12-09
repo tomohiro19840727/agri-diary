@@ -103,7 +103,7 @@ const CurrentYearCalendar = () => {
      <form onSubmit={createPost}>
       <textarea  value={content} placeholder="内容を記入してください" onChange={handleChange}/>
       <input type="file"  accept="png, .jpeg, .jpg, .HEIC" onChange={handleImage} />
-    <button type="submit">保存</button>
+    <button type="submit">保</button>
      </form>
     </div>
 
