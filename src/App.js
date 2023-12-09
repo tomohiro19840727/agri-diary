@@ -3,6 +3,7 @@ import CurrentYearCalendar from './components/CurrentYearCalendar'
 import LastYearCalendar from './components/LastYearCalendar'
 import TwoYearsAgoCalendar from './components/TwoYearsAgoCalendar'
 import Header from './components/Header'
+import Search from './components/Search'
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
     <CurrentYearCalendar />
     <LastYearCalendar />
     <TwoYearsAgoCalendar />
+    <Search />
     </>
 
   )

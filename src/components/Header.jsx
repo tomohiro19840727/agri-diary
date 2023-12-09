@@ -1,6 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from "axios";
 
 const Header = () => {
+  const [weatherData, setWeatherData] = useState(null);
+  const apiKey = "8d0c3afcfadc43898f541938230812";
+  const city = "Rankoshi";
+
+  useEffect(() => {
+    axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`)
+      .then((response) => {
+        setWeatherData(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("エラー:", error);
+      });
+  }, [apiKey, city]);
+
+  // weatherDataがnullの場合の条件分岐
+  if (!weatherData) {
+    return <div>Loading...</div>;
+  }
+
+  const cityName = weatherData.location.name;
+
+  const getJapaneseWindDirection = (abbreviation) => {
+    const directionMap = {
+      N: '北',
+      NNE: '北北東',
+      NE: '北東',
+      ENE: '東北東',
+      E: '東',
+      ESE: '東南東',
+      SE: '南東',
+      SSE: '南南東',
+      S: '南',
+      SSW: '南南西',
+      SW: '南西',
+      WSW: '西南西',
+      W: '西',
+      WNW: '西北西',
+      NW: '北西',
+      NNW: '北北西',
+    };
+    return directionMap[abbreviation] || abbreviation;
+  };
+
   return (
     <>
     <header class="mb-8 border-b bg-slate-200">
@@ -57,6 +102,17 @@ const Header = () => {
 
           <span class="hidden text-xs font-semibold text-gray-500 sm:block">Menu</span>
         </button>
+       
+        <div>
+    <h1>場所 {cityName}</h1>
+    <p>気温: {weatherData?.current.temp_c} °C</p>
+    <p>風速: {weatherData?.current.wind_kph} km/h</p>
+    <p>風向: {getJapaneseWindDirection(weatherData?.current.wind_dir)}</p>
+    {weatherData && (
+      <img src={weatherData.current.condition.icon} alt="Weather Icon" />
+    )}
+  </div>
+
       </div>
       
     </div>
