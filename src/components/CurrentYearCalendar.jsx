@@ -3,9 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { db, storage } from '../firebase';
 import { addDoc, collection, getDocs, query } from 'firebase/firestore';
 
-const CurrentYearCalendar = () => {
+const CurrentYearCalendar = ({ postList }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [postList, setPostList] = useState([]);
   const [content, setContent ] = useState([]);
   const [singleImage, setSingleImage] = useState('');
 
@@ -67,14 +66,6 @@ const CurrentYearCalendar = () => {
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
   };
-
-  useEffect(() => {
-    const getPosts = async () => {
-      const data = await getDocs(query(collection(db, 'posts')));
-      setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getPosts();
-  },[]);
 
    console.log(formattedDate);
 

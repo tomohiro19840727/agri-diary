@@ -3,9 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { db, storage } from '../firebase';
 import { addDoc, collection, getDocs, query } from 'firebase/firestore';
 
-const LastYearCalendar = () => {
+const LastYearCalendar = ({ lastpostList}) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [postList, setPostList] = useState([]);
   const [content, setContent ] = useState([]);
   const [singleImage, setSingleImage] = useState('');
 
@@ -66,16 +65,16 @@ const LastYearCalendar = () => {
     const year = currentDate.getFullYear();
   };
 
-  useEffect(() => {
-    const getPosts = async () => {
-      const data = await getDocs(query(collection(db, 'lastposts')));
-      setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getPosts();
-  },[]);
+  // useEffect(() => {
+  //   const getPosts = async () => {
+  //     const data = await getDocs(query(collection(db, 'lastposts')));
+  //     setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //   };
+  //   getPosts();
+  // },[]);
 
    console.log(formattedDate);
-   const filteredPosts = postList.filter((post) => post.createdAt === formattedDate);
+   const filteredPosts = lastpostList.filter((post) => post.createdAt === formattedDate);
 
   return (
     <>

@@ -1,29 +1,22 @@
-import { collection, getDocs, query } from 'firebase/firestore';
-import React, { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import React, { useState } from 'react';
 
 
-function Search() {
+function Search({ postList, lastpostList, twolastpostList }) {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [postList, setPostList] = useState([]);
-
-  useEffect(() => {
-    const getPosts = async () => {
-      const data = await getDocs(query(collection(db, 'posts')));
-      setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getPosts();
-  },[]);
 
   const handleSearch = async () => {
-    const results = postList.filter((doc) =>
-    doc.content.toLowerCase().includes(searchText.toLowerCase())
-  );
-  console.log(results)
-  setSearchResults(results);
+    const lists = [postList, lastpostList, twolastpostList];
+
+     const results = lists.flatMap((list) => 
+     list.filter((doc) => doc.content.toLowerCase().includes(searchText.toLowerCase())
+     )
+     );
+     console.log(results);
+     setSearchResults(results);
   };
-  
+
+
   return (
     <div>
       <input
