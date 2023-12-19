@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { db, storage } from '../firebase';
 import { addDoc, collection, getDocs, query } from 'firebase/firestore';
 
-const CurrentYearCalendar = ({ postList }) => {
+const CurrentYearCalendar = ({ postList, formattedDate2 }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [content, setContent ] = useState([]);
   const [singleImage, setSingleImage] = useState('');
@@ -69,10 +69,13 @@ const CurrentYearCalendar = ({ postList }) => {
 
    console.log(formattedDate);
 
-   const filteredPosts = postList.filter((post) => post.createdAt === formattedDate);
+  //  const filteredPosts = postList.filter((post) => post.createdAt === formattedDate);
+  const filteredPosts = postList.filter((post) => post.createdAt === formattedDate || post.createdAt === formattedDate2);
+
 
   return (
     <>
+    <h1>{formattedDate2}</h1>
     <div className="container mx-auto mt-8 text-center">
       <div className="flex justify-center items-center mb-4">
         <button
@@ -81,7 +84,9 @@ const CurrentYearCalendar = ({ postList }) => {
           >
           前日
         </button>
-        <p className="text-2xl">{formattedDate}</p>
+        {/* <p className="text-2xl">{formattedDate}</p> */}
+        <p className="text-2xl">{formattedDate2 || formattedDate}</p>
+
       
         <button
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded"
@@ -114,6 +119,7 @@ const CurrentYearCalendar = ({ postList }) => {
         class="w-20 m-5" 
         />
         </div>
+      
       ))} 
     </>
   )
