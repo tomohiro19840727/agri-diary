@@ -101,6 +101,15 @@ const CurrentYearCalendar = ({ postList }) => {
       {filteredPosts.map((post) => (
         <div key={post.id}>
         <h4>{post.content}</h4>
+        {/* <h3>{post.weather.city}</h3>
+        <h3>{post.weather.temperature}</h3> */}
+         {post.weather && (
+      <>
+        <h3>{post.weather.city}</h3>
+        <h3>{post.weather.temperature}</h3>
+      </>
+    )}
+
         <img src={post.imgUrl} loading="lazy" alt="Photo by Austin Wade"
         class="w-20 m-5" 
         />

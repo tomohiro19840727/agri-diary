@@ -6,6 +6,7 @@ import Header from './components/Header'
 import Search from './components/Search'
 import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from './firebase'
+import Test from './components/Test'
 
 const App = () => {
   const [postList, setPostList] = useState([]);
@@ -37,6 +38,7 @@ const App = () => {
       <LastYearCalendar lastpostList={lastpostList} />
       <TwoYearsAgoCalendar twolastpostList={twolastpostList} />
       <Search postList={postList} lastpostList={lastpostList} twolastpostList={twolastpostList} />
+      <Test />
     </>
   )
 }
