@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { db, storage } from '../firebase';
 import { addDoc, collection, getDocs, query } from 'firebase/firestore';
 
-const CurrentYearCalendar = ({ postList, formattedDate2 }) => {
+const CurrentYearCalendar = ({ postList, formattedDate2, setFormattedDate2 }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [content, setContent ] = useState([]);
   const [singleImage, setSingleImage] = useState('');
@@ -42,21 +42,51 @@ const CurrentYearCalendar = ({ postList, formattedDate2 }) => {
   ).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
 
   const prevDay = () => {
-    const prevDate = new Date(currentDate);
-    prevDate.setDate(currentDate.getDate() - 1);
+    let prevDate;
+
+    if (formattedDate2) {
+      // カレンダーをタップして得られる日付がある場合
+      prevDate = new Date(formattedDate2);
+    } else {
+      // 通常の日付
+      prevDate = new Date(currentDate);
+    }
+
+    // const prevDate = new Date(currentDate);
+    prevDate.setDate(prevDate.getDate() - 1);
     setCurrentDate(prevDate);
-  };
+    updateFormattedDate(prevDate);
+  };  
 
   const nextDay = () => {
-    const nextDate = new Date(currentDate);
-    nextDate.setDate(currentDate.getDate() + 1);
+    let nextDate;
+
+    if (formattedDate2) {
+      // カレンダーをタップして得られる日付がある場合
+      nextDate = new Date(formattedDate2);
+    } else {
+      // 通常の日付
+      nextDate = new Date(currentDate);
+    }
+
+    // const nextDate = new Date(currentDate);
+    nextDate.setDate(nextDate.getDate() + 1);
     setCurrentDate(nextDate);
+    updateFormattedDate(nextDate);
   };
 
   // 日付が変更されたときに実行される useEffect
   useEffect(() => {
     updateGreeting();
   }, [currentDate]);
+
+  const updateFormattedDate = (date) => {
+    const formattedDate = `${date.getFullYear()}-${(
+      date.getMonth() + 1
+    ).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    // 新しいフォーマットされた日付で状態を更新
+    setFormattedDate2(formattedDate);
+  };
 
   
 
@@ -99,15 +129,13 @@ const CurrentYearCalendar = ({ postList, formattedDate2 }) => {
      <form onSubmit={createPost}>
       <textarea  value={content} placeholder="内容を記入してください" onChange={handleChange}/>
       <input type="file"  accept="png, .jpeg, .jpg, .HEIC" onChange={handleImage} />
-    <button type="submit">保</button>
+    <button type="submit">保存</button>
      </form>
     </div>
 
       {filteredPosts.map((post) => (
         <div key={post.id}>
         <h4>{post.content}</h4>
-        {/* <h3>{post.weather.city}</h3>
-        <h3>{post.weather.temperature}</h3> */}
          {post.weather && (
       <>
         <h3>{post.weather.city}</h3>

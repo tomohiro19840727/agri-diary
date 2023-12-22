@@ -124,7 +124,9 @@ const App = () => {
   return (
     <>
       <Header />
-      <CurrentYearCalendar postList={postList} formattedDate2={formattedDate2} />
+      <CurrentYearCalendar postList={postList} formattedDate2={formattedDate2} 
+       setFormattedDate2={setFormattedDate2}
+      />
       <LastYearCalendar lastpostList={lastpostList} />
       <TwoYearsAgoCalendar twolastpostList={twolastpostList} />
       <Search postList={postList} lastpostList={lastpostList} twolastpostList={twolastpostList} />
