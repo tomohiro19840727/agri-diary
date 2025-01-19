@@ -105,50 +105,56 @@ const CurrentYearCalendar = ({ postList, formattedDate2, setFormattedDate2 }) =>
 
   return (
     <>
-    <h1>{formattedDate2}</h1>
-    <div className="container mx-auto mt-8 text-center">
-      <div className="flex justify-center items-center mb-4">
+<div class="bg-white py-6 sm:py-8 lg:py-12">
+  <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+    <div class="flex overflow-hidden rounded-lg bg-gray-100">    
+      <div class="flex w-full items-center p-4 sm:w-2/3 sm:p-8 lg:w-1/2 lg:pl-10">
+        <div class="flex w-full flex-col items-center sm:block">
+          <div class="mb-4 sm:mb-8">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded"
           onClick={prevDay}
           >
           前日
         </button>
-        {/* <p className="text-2xl">{formattedDate}</p> */}
-        <p className="text-2xl">{formattedDate2 || formattedDate}</p>
-
-      
         <button
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded"
           onClick={nextDay}
           >
           翌日
         </button>
+            <h2 class="text-center text-xl font-bold text-indigo-500 sm:text-left sm:text-2xl lg:text-3xl">{formattedDate2 || formattedDate}</h2>
+            
+          </div>
+
+          <form onSubmit={createPost}>
+           <div class="mb-3 flex w-full max-w-md gap-2 sm:mb-5">
+          <textarea className='' value={content} placeholder="内容を記入してください" onChange={handleChange} class="w-full"/>
+            </div> 
+           <div class="mb-3 flex w-full max-w-md gap-2 sm:mb-5">
+            <input placeholder="Email" class="bg-gray-white w-full flex-1 rounded border border-gray-300 px-3 py-2 text-gray-800 placeholder-gray-400 outline-none ring-indigo-300 transition duration-100 focus:ring" type="file"  accept="png, .jpeg, .jpg, .HEIC" onChange={handleImage} />
+            <button class="rounded bg-indigo-500 px-8 py-2 text-center text-sm font-semibold text-white"  type="submit">保存</button>
+            </div>      
+          </form>
+        </div>
       </div>
-
-     <form onSubmit={createPost}>
-      <textarea  value={content} placeholder="内容を記入してください" onChange={handleChange}/>
-      <input type="file"  accept="png, .jpeg, .jpg, .HEIC" onChange={handleImage} />
-    <button type="submit">保存</button>
-     </form>
-    </div>
-
-      {filteredPosts.map((post) => (
-        <div key={post.id}>
-        <h4>{post.content}</h4>
+        {filteredPosts.map((post) => (
+        <div key={post.id} className=''>
+        <h4 className=''>{post.content}</h4>
          {post.weather && (
       <>
         <h3>{post.weather.city}</h3>
         <h3>{post.weather.temperature}</h3>
       </>
     )}
-
         <img src={post.imgUrl} loading="lazy" alt="Photo by Austin Wade"
         class="w-20 m-5" 
         />
-        </div>
-      
-      ))} 
+        </div>     
+      ))}   
+    </div>
+  </div>
+</div>
     </>
   )
 }

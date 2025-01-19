@@ -1,7 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import React, { useEffect, useState } from 'react'
 import { db, storage } from '../firebase';
-import { addDoc, collection, getDocs, query } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 
 const TwoYearsAgoCalendar = ({ twolastpostList }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
